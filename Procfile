@@ -1,1 +1,1 @@
-web: bin/ayachan-bestdoriapi
+web: bin/ayachan-bestdoriAPI
