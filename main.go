@@ -8,10 +8,12 @@ import (
 func main() {
 	r := router.InitRouter()
 	port := os.Getenv("PORT")
+	var err error
 	if port == "" {
-		port = "21104"
+		err = r.Run("0.0.0.0:21104")
+	} else {
+		err = r.Run(":" + port)
 	}
-	err := r.Run("0.0.0.0:" + port)
 	if err != nil {
 		return
 	}
