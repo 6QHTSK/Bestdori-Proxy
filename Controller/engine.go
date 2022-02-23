@@ -13,6 +13,7 @@ func GetEngine(c *gin.Context) {
 			"result": false,
 			"error":  err.Error(),
 		})
+		return
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"result": true,

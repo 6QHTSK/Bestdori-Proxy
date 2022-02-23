@@ -7,12 +7,11 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
-	"time"
 )
 
 func HttpGet(url string, object interface{}) (errorCode int, err error) {
 	var Client = http.Client{
-		Timeout: time.Second * 10, // 5秒超时
+		//Timeout: time.Second * 10, // 5秒超时
 	}
 
 	res, err := Client.Get(url)
@@ -40,7 +39,7 @@ func HttpGet(url string, object interface{}) (errorCode int, err error) {
 
 func HttpPost(url string, payload interface{}, object interface{}) (errorCode int, err error) {
 	var Client = http.Client{
-		Timeout: time.Second * 10, // 5秒超时
+		//Timeout: time.Second * 10, // 5秒超时
 	}
 
 	payloadJson, err := json.Marshal(payload)
