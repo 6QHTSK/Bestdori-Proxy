@@ -26,8 +26,8 @@ jobs:
       - name: build
         run: go build -o release/main
         env:
-          - GOOS=linux
-          - GOARCH=amd64
+          - GOOS: linux
+          - GOARCH: amd64
       - name: deploy serverless
         run: sls deploy --debug
         env: # 环境变量
