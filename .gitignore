@@ -1,3 +1,4 @@
 /release/
 /http-demo/node_modules/
 /.env
+/my-secrets
