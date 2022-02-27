@@ -1,0 +1,36 @@
+# 当代码推动到 dev 分支时，执行当前工作流程
+# 更多配置信息: https://docs.github.com/cn/actions/getting-started-with-github-actions
+
+name: deploy serverless
+
+on: #监听的事件和分支配置
+  push:
+    branches:
+      - master
+      - serverless-dev
+
+jobs:
+  deploy:
+    name: deploy serverless
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+      - name: clone local repository
+        uses: actions/checkout@v2
+      - name: install serverless
+        run: npm install -g serverless
+      - name: build
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '^1.17'
+        run: go build -o release/main
+        env:
+          - GOOS=linux
+          - GOARCH=amd64
+      - name: deploy serverless
+        run: sls deploy --debug
+        env: # 环境变量
+          STAGE: dev #您的部署环境
+          SERVERLESS_PLATFORM_VENDOR: tencent #serverless 境外默认为 aws，配置为腾讯
+          TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }} #您的腾讯云账号 sercret ID
+          TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }} #您的腾讯云账号 sercret key
