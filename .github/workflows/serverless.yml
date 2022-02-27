@@ -24,10 +24,7 @@ jobs:
       - name: install serverless
         run: npm install -g serverless
       - name: build
-        run: go build -o release/main
-        env:
-          - GOOS: linux
-          - GOARCH: amd64
+        run: GOOS=linux GOARCH=amd64 go build -o release/main
       - name: deploy serverless
         run: sls deploy --debug
         env: # 环境变量
