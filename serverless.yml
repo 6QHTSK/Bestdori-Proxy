@@ -1,12 +1,12 @@
 component: scf
-name: http
+name: bestdoriapi
 inputs:
   src:
-    src: ../release
+    src: ./release
     exclude:
       - .env
   type: web
-  name: bestdori-ayachan
+  name: ayachan-bestdoriapi
   region: ap-tokyo
   runtime: Go1
   events:
@@ -19,4 +19,4 @@ inputs:
           endpoints:
             - path: /
               method: ANY
-app: http-demo
+app: ayachan-bestdoriapi

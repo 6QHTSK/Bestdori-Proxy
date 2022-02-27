@@ -21,7 +21,7 @@ jobs:
         with:
           go-version: '^1.17'
       - name: build
-        run: GOOS=linux GOARCH=amd64 go build -o release/main
+        run: GOPROXY="https://goproxy.cn/" GOOS=linux GOARCH=amd64 go build -o release/main
       - name: install serverless
         run: npm install -g serverless
       - name: deploy serverless
