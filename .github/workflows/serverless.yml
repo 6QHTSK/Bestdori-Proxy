@@ -13,7 +13,6 @@ jobs:
   deploy:
     name: deploy serverless
     runs-on: ubuntu-latest
-    needs: [test]
     steps:
       - name: clone local repository
         uses: actions/checkout@v2
