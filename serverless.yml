@@ -1,0 +1,22 @@
+component: scf
+name: bestdoriapi
+inputs:
+  src:
+    src: ./release
+    exclude:
+      - .env
+  type: web
+  name: ayachan-bestdoriapi
+  region: ap-tokyo
+  runtime: Go1
+  events:
+    - apigw:
+        parameters:
+          protocols:
+            - http
+            - https
+          environment: release
+          endpoints:
+            - path: /
+              method: ANY
+app: ayachan-bestdoriapi

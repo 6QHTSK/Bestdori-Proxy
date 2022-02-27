@@ -1,0 +1,5 @@
+#!/bin/bash
+# scf_bootstrap
+cp main /tmp/
+chmod +x /tmp/main
+/tmp/main
