@@ -21,10 +21,10 @@ jobs:
         with:
           go-version: '^1.17'
       - name: make envFile
-        - uses: SpicyPizza/create-envfile@v1.3
-          with:
-            TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }} #您的腾讯云账号 sercret ID
-            TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }} #您的腾讯云账号 sercret key
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }} #您的腾讯云账号 sercret ID
+          TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }} #您的腾讯云账号 sercret key
       - name: install serverless
         run: npm install -g serverless
       - name: build
