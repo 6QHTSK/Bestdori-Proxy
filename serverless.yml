@@ -9,9 +9,11 @@ inputs:
   name: ayachan-bestdoriapi
   region: ap-tokyo
   runtime: Go1
+  timeout: 15
   events:
     - apigw:
         parameters:
+          serviceId: ${env:scf_apigw_serviceID}
           protocols:
             - http
             - https

@@ -31,3 +31,4 @@ jobs:
           TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }} #您的腾讯云账号 sercret ID
           TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }} #您的腾讯云账号 sercret key
           GLOBAL_ACCELERATOR_NA : true
+          scf_apigw_serviceID: ${{ secrets.SCF_APIGW_SERVICEID }}

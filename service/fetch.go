@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func getDiffStrBestdori(diff models.DiffType) string {
+func getDiffStr(diff models.DiffType) string {
 	switch diff {
 	case models.Diff_Easy:
 		return "easy"
@@ -25,33 +25,16 @@ func getDiffStrBestdori(diff models.DiffType) string {
 	}
 }
 
-func getDiffStrSonolus(diff models.DiffType) string {
-	switch diff {
-	case models.Diff_Easy:
-		return "E"
-	case models.Diff_Normal:
-		return "N"
-	case models.Diff_Hard:
-		return "H"
-	case models.Diff_Expert:
-		return "EX"
-	case models.Diff_Special:
-		return "SP"
-	default:
-		return "EX"
-	}
-}
-
 func FetchChartInfo(chartID int, diff models.DiffType) (chart models.ProcessedChartItem, errorCode int, err error) {
 	var bestdoriChart models.BestdoriChartItem
 	var sonolusChart models.SonolusChartItem
 	if chartID <= 1010 {
 		var officialMap models.BestdoriV2Chart
-		officialURL := fmt.Sprintf("https://bestdori.com/api/charts/%d/%s.json", chartID, getDiffStrBestdori(diff))
+		officialURL := fmt.Sprintf("https://bestdori.com/api/charts/%d/%s.json", chartID, getDiffStr(diff))
 		_, err := utils.HttpGet(officialURL, officialMap)
 		// 如果是官谱
 		if err == nil {
-			officialURL := fmt.Sprintf("https://servers.sonolus.com/bandori/levels/%d.%s", chartID, getDiffStrSonolus(diff))
+			officialURL := fmt.Sprintf("https://servers.sonolus.com/bandori/sonolus/levels/bandori-%d-%s", chartID, getDiffStr(diff))
 			_, err := utils.HttpGet(officialURL, &sonolusChart)
 			if err != nil {
 				return chart, http.StatusBadGateway, err
@@ -82,7 +65,7 @@ func FetchChartInfo(chartID int, diff models.DiffType) (chart models.ProcessedCh
 	if !bestdoriChart.Result || bestdoriChart.Post.CategoryName != "SELF_POST" || bestdoriChart.Post.CategoryId != "chart" {
 		return chart, http.StatusNotFound, fmt.Errorf("谱面未找到")
 	}
-	customURL = fmt.Sprintf("https://servers.sonolus.com/bestdori/levels/%d", chartID)
+	customURL = fmt.Sprintf("https://servers.sonolus.com/bestdori/sonolus/levels/bestdori-%d", chartID)
 	errorCode, err = utils.HttpGet(customURL, &sonolusChart)
 	if err != nil {
 		return chart, errorCode, err
@@ -111,7 +94,7 @@ func FetchChartInfo(chartID int, diff models.DiffType) (chart models.ProcessedCh
 
 func FetchMap(chartID int, diff models.DiffType) (Map models.BestdoriV2Chart, errorCode int, err error) {
 	if chartID < 1010 {
-		officialURL := fmt.Sprintf("https://bestdori.com/api/charts/%d/%s.json", chartID, getDiffStrBestdori(diff))
+		officialURL := fmt.Sprintf("https://bestdori.com/api/charts/%d/%s.json", chartID, getDiffStr(diff))
 		_, err := utils.HttpGet(officialURL, &Map)
 		if err == nil {
 			return Map, http.StatusOK, nil
@@ -174,7 +157,7 @@ type engineQueryResult struct {
 
 func FetchEngine() (engine models.Engine, errCode int, err error) {
 	var queryResult engineQueryResult
-	URL := "https://servers.sonolus.com/bestdori/engines/bandori"
+	URL := "https://servers.sonolus.com/bestdori/sonolus/engines/bandori"
 	errCode, err = utils.HttpGet(URL, &queryResult)
 	if err != nil {
 		return engine, errCode, err
