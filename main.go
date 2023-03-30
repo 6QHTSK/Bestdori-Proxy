@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/6QHTSK/ayachan-bestdoriAPI/router"
+	"Bestdori-Proxy/router"
 	"os"
 )
 

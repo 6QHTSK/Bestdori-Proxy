@@ -1,17 +1,23 @@
 package router
 
 import (
-	"github.com/6QHTSK/ayachan-bestdoriAPI/Controller"
+	"Bestdori-Proxy/controller"
+	"Bestdori-Proxy/middleware"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func InitRouter() (router *gin.Engine) {
 	router = gin.Default()
-	router.Use(cors.Default())
-	router.GET("/:chartID/map", Controller.GetMap)
-	router.GET("/:chartID", Controller.GetChartInfo)
-	router.GET("/list", Controller.GetChartList)
-	router.GET("/engine", Controller.GetEngine)
+	router.Use(cors.Default(), middleware.ErrorHandler())
+	bestdori := router.Group("/bestdori")
+	{
+		bestdori.GET("/chart", controller.GetChartList)
+		bestdori.GET("/chart/:chartID", controller.GetChartInfo)
+		bestdori.GET("/chart/:chartID/:method", controller.GetChartInfo)
+		bestdori.GET("/cover/:chartID", controller.CoverProxy)
+		bestdori.GET("/music/:chartID", controller.MusicProxy)
+	}
+	router.GET("/sonolus/*path", controller.SonolusProxy)
 	return router
 }
