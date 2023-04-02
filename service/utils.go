@@ -1,17 +1,17 @@
-package utils
+package service
 
 import (
 	"Bestdori-Proxy/errors"
 	"bytes"
 	"encoding/json"
 	"io"
-	"io/ioutil"
+	"log"
 	"net/http"
 	url2 "net/url"
 	"time"
 )
 
-func HttpGet(url string, object interface{}) (err error) {
+func httpGet(url string, object interface{}) (err error) {
 	var Client = http.Client{
 		Timeout: time.Second * 10, // 5秒超时
 	}
@@ -21,6 +21,7 @@ func HttpGet(url string, object interface{}) (err error) {
 		if url2Error, ok := err.(*url2.Error); ok && url2Error.Timeout() {
 			return errors.RemoteReplyTimeout
 		}
+		log.Println(err)
 		return errors.RemoteReplyErr
 	}
 	if res.StatusCode != http.StatusOK {
@@ -45,7 +46,7 @@ func HttpGet(url string, object interface{}) (err error) {
 	return nil
 }
 
-func HttpPost(url string, payload interface{}, object interface{}) (err error) {
+func httpPost(url string, payload interface{}, object interface{}) (err error) {
 	var Client = http.Client{
 		Timeout: time.Second * 10, // 5秒超时
 	}
@@ -72,7 +73,7 @@ func HttpPost(url string, payload interface{}, object interface{}) (err error) {
 		}
 	}(res.Body)
 	if res.StatusCode == http.StatusOK {
-		body, err := ioutil.ReadAll(res.Body)
+		body, err := io.ReadAll(res.Body)
 		if err != nil {
 			return errors.RemoteReplyReadErr
 		}

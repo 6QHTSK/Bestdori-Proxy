@@ -3,22 +3,23 @@ package bestdori
 import (
 	"Bestdori-Proxy/config"
 	"math"
+	"strconv"
 	"strings"
 )
 
-type OfficialPost struct {
+type BandoriPost struct {
 	MusicTitle  []*string `json:"musicTitle"`
 	BandID      int       `json:"bandId"`
 	BgmFile     string    `json:"bgmFile"`
 	JacketImage []string  `json:"jacketImage"`
 	Description []*string `json:"Description"`
-	PublishAt   []*int64  `json:"publishAt"`
+	PublishedAt []*string `json:"publishedAt"`
 	Difficulty  map[int]struct {
 		PlayLevel int `json:"playLevel"`
 	} `json:"difficulty"`
 }
 
-func (p *OfficialPost) GetRegion() string {
+func (p *BandoriPost) GetRegion() string {
 	var region = []string{"jp", "en", "tw", "cn", "kr"}
 	for i, s := range p.MusicTitle {
 		if s != nil {
@@ -28,7 +29,7 @@ func (p *OfficialPost) GetRegion() string {
 	return region[0]
 }
 
-func (p *OfficialPost) Title() string {
+func (p *BandoriPost) Title() string {
 	for _, s := range p.MusicTitle {
 		if s != nil {
 			return strings.ToValidUTF8(*s, "")
@@ -37,7 +38,7 @@ func (p *OfficialPost) Title() string {
 	return ""
 }
 
-func (p *OfficialPost) CoverUrl(musicID int) string {
+func (p *BandoriPost) CoverUrl(musicID int) string {
 	var jacket string
 	for _, s := range p.JacketImage {
 		if s != "" {
@@ -48,11 +49,11 @@ func (p *OfficialPost) CoverUrl(musicID int) string {
 	return config.BestdoriCoverUrl(p.GetRegion(), bundle, jacket)
 }
 
-func (p *OfficialPost) SongUrl(musicID int) string {
-	return config.BestdoriBGMUrl(p.GetRegion(), musicID)
+func (p *BandoriPost) AudioUrl(musicID int) string {
+	return config.BestdoriAudioUrl(p.GetRegion(), musicID)
 }
 
-func (p *OfficialPost) Content() string {
+func (p *BandoriPost) Content() string {
 	for _, s := range p.MusicTitle {
 		if s != nil {
 			return strings.ToValidUTF8(*s, "")
@@ -61,10 +62,14 @@ func (p *OfficialPost) Content() string {
 	return ""
 }
 
-func (p *OfficialPost) Time() int64 {
-	for _, s := range p.PublishAt {
+func (p *BandoriPost) Time() int64 {
+	for _, s := range p.PublishedAt {
 		if s != nil {
-			return *s
+			value, err := strconv.ParseInt(*s, 10, 64)
+			if err != nil {
+				continue
+			}
+			return value / 1000
 		}
 	}
 	return 0

@@ -57,53 +57,24 @@ func (c *allJsonCache) SetBandList(bandList bestdori.BandNameMap) error {
 	return nil
 }
 
-func (c *allJsonCache) GetLLSifItem(musicID int) (item bestdori.LLSifAllJsonItem, err error) {
-	LLSifListRaw, err := AllJson.cache.Get("LLSif")
-	if err != nil {
-		return item, err
-	}
-	var LLSifList bestdori.LLSifAllJson
-	err = json.Unmarshal(LLSifListRaw, &LLSifList)
-	if err != nil {
-		return item, errors.JsonUnMarshalError
-	}
-	item, ok := LLSifList[musicID]
-	if !ok {
-		return item, errors.CacheNotFound
-	}
-	return item, nil
-}
-
-func (c *allJsonCache) SetLLSifList(LLSifList bestdori.LLSifAllJson) error {
-	LLSifListRaw, err := json.Marshal(LLSifList)
-	if err != nil {
-		return errors.JsonMarshalErr
-	}
-	err = AllJson.cache.Set("LLSif", LLSifListRaw)
-	if err != nil {
-		return errors.CacheSetErr
-	}
-	return nil
-}
-
-func (c *allJsonCache) GetOfficialChartList() (officialList []int, err error) {
-	chartListRaw, err := AllJson.cache.Get("Chart")
+func (c *allJsonCache) GetOfficialPostList() (officialList []int, err error) {
+	postListRaw, err := AllJson.cache.Get("officialPost")
 	if err != nil {
 		return officialList, errors.CacheGetErr
 	}
-	err = json.Unmarshal(chartListRaw, &officialList)
+	err = json.Unmarshal(postListRaw, &officialList)
 	if err != nil {
 		return officialList, errors.JsonUnMarshalError
 	}
 	return officialList, nil
 }
 
-func (c *allJsonCache) SetOfficialChartList(officialChartList []int) error {
-	chartListRaw, err := json.Marshal(officialChartList)
+func (c *allJsonCache) SetOfficialPostList(officialPostList []int) error {
+	postListRaw, err := json.Marshal(officialPostList)
 	if err != nil {
 		return errors.JsonMarshalErr
 	}
-	err = c.cache.Set("Chart", chartListRaw)
+	err = c.cache.Set("officialPost", postListRaw)
 	if err != nil {
 		return errors.CacheSetErr
 	}

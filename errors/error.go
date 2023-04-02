@@ -11,11 +11,14 @@ type ProxyError struct {
 // 服务器内部错误
 var (
 	UnknownErr         = NewProxyError(1, http.StatusInternalServerError, "")
+	NoRouteErr         = NewProxyError(2, http.StatusNotFound, "路由未找到")
+	UnsupportedHandler = NewProxyError(3, http.StatusNotFound, "该服务器的此方法未支持")
 	CacheGetErr        = NewProxyError(11, http.StatusInternalServerError, "Cache获取错误/未命中")
 	CacheSetErr        = NewProxyError(12, http.StatusInternalServerError, "Cache设置错误")
 	CacheNotFound      = NewProxyError(13, http.StatusInternalServerError, "Cache丢失")
 	JsonMarshalErr     = NewProxyError(21, http.StatusInternalServerError, "生成Json失败")
 	JsonUnMarshalError = NewProxyError(22, http.StatusInternalServerError, "解析Json失败")
+	UnknownServerErr   = NewProxyError(31, http.StatusBadRequest, "找不到声称的Server名称")
 )
 
 // HTTP 远程资源获取器获取器
@@ -30,10 +33,10 @@ var (
 
 // Bestdori 官方与自制谱面接口
 var (
-	ChartIDParseErr      = NewProxyError(201, http.StatusBadRequest, "谱面ID解析错误")
-	DiffParseErr         = NewProxyError(202, http.StatusBadRequest, "谱面难度解析错误")
+	PostIDParseErr       = NewProxyError(201, http.StatusBadRequest, "谱面ID解析错误")
+	DiffParseErr         = NewProxyError(202, http.StatusBadRequest, "难度字段解析错误")
 	MethodParseErr       = NewProxyError(203, http.StatusBadRequest, "谱面请求方法解析错误")
-	ChartNotFound        = NewProxyError(211, http.StatusNotFound, "谱面未找到")
+	PostNotFound         = NewProxyError(211, http.StatusNotFound, "谱面未找到")
 	BandNotFound         = NewProxyError(212, http.StatusNotFound, "乐团未找到")
 	AssetTypeErr         = NewProxyError(213, http.StatusBadGateway, "乐曲资源类型错误")
 	DirectionNoteTypeErr = NewProxyError(221, http.StatusInternalServerError, "无法识别侧划音符的标识符")
@@ -49,7 +52,7 @@ var (
 
 // Bestdori 反向代理
 var (
-	URLParseErr = NewProxyError(401, http.StatusBadGateway, "URL解析出错")
+	RemoteReplyURLParseErr = NewProxyError(401, http.StatusBadGateway, "远程提供的URL解析出错")
 )
 
 func (e *ProxyError) Error() string {

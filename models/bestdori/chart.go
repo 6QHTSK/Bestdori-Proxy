@@ -66,8 +66,8 @@ func fixLane(lane float64, isHidden bool) float64 {
 	return math.Max(0.0, math.Min(6.0, math.Round(lane)))
 }
 
-// MapCheck 尝试检查并修复谱面，并将官谱转化为自制谱格式
-func (chart V2Chart) MapCheck() (err error) {
+// ChartCheck 尝试检查并修复谱面，并将官谱转化为自制谱格式
+func (chart V2Chart) ChartCheck() (err error) {
 	BPMStartCorrect := false // BPM需出现在第0拍上
 	var i int
 	for _, note := range chart {

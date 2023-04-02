@@ -4,7 +4,7 @@ import (
 	"strings"
 )
 
-type FanmadePost struct {
+type BestdoriPost struct {
 	Result bool `json:"result"`
 	Post   struct {
 		CategoryName string `json:"categoryName"`
@@ -32,27 +32,27 @@ type FanmadePost struct {
 	} `json:"post"`
 }
 
-func (p *FanmadePost) IsChart() bool {
+func (p *BestdoriPost) IsChart() bool {
 	return p.Result && p.Post.CategoryName == "SELF_POST" && p.Post.CategoryId == "chart"
 }
 
-func (p *FanmadePost) GetTitle() string {
+func (p *BestdoriPost) GetTitle() string {
 	return strings.ToValidUTF8(p.Post.Title, "")
 }
 
-func (p *FanmadePost) GetArtists() string {
+func (p *BestdoriPost) GetArtists() string {
 	return strings.ToValidUTF8(p.Post.Artists, "")
 }
 
-func (p *FanmadePost) GetUsername() string {
+func (p *BestdoriPost) GetUsername() string {
 	return strings.ToValidUTF8(p.Post.Author.Username, "")
 }
 
-func (p *FanmadePost) GetNickname() string {
+func (p *BestdoriPost) GetNickname() string {
 	return strings.ToValidUTF8(p.Post.Author.Nickname, "")
 }
 
-func (p *FanmadePost) GetContent() (content string) {
+func (p *BestdoriPost) GetContent() (content string) {
 	for _, lane := range p.Post.Content {
 		if lane.Type == "text" {
 			content += lane.Data + "\n"

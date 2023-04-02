@@ -36,8 +36,8 @@ func (p LLSifAllJsonItem) CoverUrl() string {
 	return config.LLSifAssetPrefix + p.LiveIconAsset
 }
 
-func (p LLSifAllJsonItem) SongUrl() string {
+func (p LLSifAllJsonItem) AudioUrl() string {
 	return config.LLSifAssetPrefix + p.SoundAsset
 }
 
-type ChartAllJson map[int]interface{}
+type OfficialPostAllJson map[int]interface{}
