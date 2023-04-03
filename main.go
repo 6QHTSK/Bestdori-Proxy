@@ -1,20 +1,21 @@
 package main
 
 import (
-	"Bestdori-Proxy/router"
+	"github.com/6QHTSK/Bestdori-Proxy/config"
+	"github.com/6QHTSK/Bestdori-Proxy/router"
+	"log"
 	"os"
 )
 
 func main() {
 	r := router.InitRouter()
 	port := os.Getenv("PORT")
-	var err error
 	if port == "" {
-		err = r.Run("0.0.0.0:9000")
-	} else {
-		err = r.Run(":" + port)
+		port = "8080"
 	}
+	log.Printf("Bestdori-Proxy %s", config.Version)
+	err := r.Run(":" + port)
 	if err != nil {
-		return
+		panic(err)
 	}
 }

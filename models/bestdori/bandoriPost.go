@@ -1,7 +1,7 @@
 package bestdori
 
 import (
-	"Bestdori-Proxy/config"
+	"github.com/6QHTSK/Bestdori-Proxy/config"
 	"math"
 	"strconv"
 	"strings"

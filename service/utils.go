@@ -1,9 +1,9 @@
 package service
 
 import (
-	"Bestdori-Proxy/errors"
 	"bytes"
 	"encoding/json"
+	"github.com/6QHTSK/Bestdori-Proxy/errors"
 	"io"
 	"log"
 	"net/http"

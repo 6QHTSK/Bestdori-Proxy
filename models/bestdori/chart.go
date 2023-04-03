@@ -1,7 +1,7 @@
 package bestdori
 
 import (
-	"Bestdori-Proxy/errors"
+	"github.com/6QHTSK/Bestdori-Proxy/errors"
 	"math"
 	"sort"
 )

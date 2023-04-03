@@ -1,6 +1,6 @@
 package models
 
-import "Bestdori-Proxy/models/bestdori"
+import "github.com/6QHTSK/Bestdori-Proxy/models/bestdori"
 
 const (
 	MethodFull = iota

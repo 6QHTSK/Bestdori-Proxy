@@ -1,0 +1,24 @@
+name: Go Test
+
+on:
+  push:
+    tags-ignore:
+      - 'v*'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version-file: './go.mod'
+
+      - name: Echo Go Version
+        run: go version
+
+      - name: Run Go test in service
+        run: go test -v ./...

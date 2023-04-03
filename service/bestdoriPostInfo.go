@@ -1,11 +1,11 @@
 package service
 
 import (
-	"Bestdori-Proxy/cache"
-	"Bestdori-Proxy/config"
-	"Bestdori-Proxy/errors"
-	"Bestdori-Proxy/models"
-	"Bestdori-Proxy/models/bestdori"
+	"github.com/6QHTSK/Bestdori-Proxy/cache"
+	"github.com/6QHTSK/Bestdori-Proxy/config"
+	"github.com/6QHTSK/Bestdori-Proxy/errors"
+	"github.com/6QHTSK/Bestdori-Proxy/models"
+	"github.com/6QHTSK/Bestdori-Proxy/models/bestdori"
 	"strings"
 )
 

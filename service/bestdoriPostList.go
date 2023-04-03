@@ -1,9 +1,9 @@
 package service
 
 import (
-	"Bestdori-Proxy/cache"
-	"Bestdori-Proxy/config"
-	"Bestdori-Proxy/models/bestdori"
+	"github.com/6QHTSK/Bestdori-Proxy/cache"
+	"github.com/6QHTSK/Bestdori-Proxy/config"
+	"github.com/6QHTSK/Bestdori-Proxy/models/bestdori"
 	"sort"
 )
 

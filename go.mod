@@ -1,4 +1,4 @@
-module Bestdori-Proxy
+module github.com/6QHTSK/Bestdori-Proxy
 
 go 1.20
 

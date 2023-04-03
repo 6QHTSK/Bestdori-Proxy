@@ -1,9 +1,9 @@
 package cache
 
 import (
-	"Bestdori-Proxy/errors"
-	"Bestdori-Proxy/models"
 	"encoding/json"
+	"github.com/6QHTSK/Bestdori-Proxy/errors"
+	"github.com/6QHTSK/Bestdori-Proxy/models"
 	"github.com/allegro/bigcache"
 	"strconv"
 	"time"

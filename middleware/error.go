@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"runtime/debug"
 )
-import "Bestdori-Proxy/errors"
+import "github.com/6QHTSK/Bestdori-Proxy/errors"
 
 func ErrorHandler(context *gin.Context) {
 	defer func() {

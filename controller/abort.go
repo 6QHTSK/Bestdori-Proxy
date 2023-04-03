@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"Bestdori-Proxy/errors"
+	"github.com/6QHTSK/Bestdori-Proxy/errors"
 	"github.com/gin-gonic/gin"
 )
 

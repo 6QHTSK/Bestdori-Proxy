@@ -1,4 +1,2 @@
-/release/main
-/http-demo/node_modules/
-/.env
-/my-secrets
+/my.secrets
+/act.env.json

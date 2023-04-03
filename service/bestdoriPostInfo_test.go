@@ -1,8 +1,8 @@
 package service
 
 import (
-	"Bestdori-Proxy/errors"
-	"Bestdori-Proxy/models"
+	"github.com/6QHTSK/Bestdori-Proxy/errors"
+	"github.com/6QHTSK/Bestdori-Proxy/models"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

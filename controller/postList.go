@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"Bestdori-Proxy/models"
-	"Bestdori-Proxy/service"
+	"github.com/6QHTSK/Bestdori-Proxy/models"
+	"github.com/6QHTSK/Bestdori-Proxy/service"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
