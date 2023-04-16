@@ -20,13 +20,13 @@ FROM alpine:latest
 MAINTAINER 6QHTSK <psk2019@qq.com>
 
 ENV GIN_MODE=release
-ENV PORT=9000
+ENV PORT=8000
 RUN apk --no-cache add ca-certificates && update-ca-certificates
 
 WORKDIR /Bestdori-Proxy
 
 COPY --from=builder /go/src/Bestdori-Proxy/Bestdori-Proxy .
 
-EXPOSE 9000
+EXPOSE 8000
 
 ENTRYPOINT ["./Bestdori-Proxy"]

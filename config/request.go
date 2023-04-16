@@ -32,5 +32,5 @@ func BestdoriCoverUrl(region string, bundle int, jacket string) string {
 }
 
 func BestdoriAudioUrl(region string, audioID int) string {
-	return fmt.Sprintf("https://bestdori.com/assets/%s/sound/bgm%d_rip/bgm%d.mp3", region, audioID, audioID)
+	return fmt.Sprintf("https://bestdori.com/assets/%s/sound/bgm%03d_rip/bgm%03d.mp3", region, audioID, audioID)
 }

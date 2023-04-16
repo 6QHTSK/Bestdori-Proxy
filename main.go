@@ -11,7 +11,7 @@ func main() {
 	r := router.InitRouter()
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8080"
+		port = "8000"
 	}
 	log.Printf("Bestdori-Proxy %s", config.Version)
 	err := r.Run(":" + port)
