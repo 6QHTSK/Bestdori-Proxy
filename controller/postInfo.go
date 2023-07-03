@@ -8,11 +8,11 @@ import (
 )
 
 const (
-	bandoriEasy = 0
-	// bandoriNormal
-	// bandoriHard
-	bandoriExpert  = 3
-	bandoriSpecial = 4
+	bandoriEasy = iota
+	bandoriNormal
+	bandoriHard
+	bandoriExpert
+	bandoriSpecial
 )
 
 var postInfoHandlerMap = map[int]gin.HandlerFunc{
@@ -29,7 +29,7 @@ func bandoriPostInfo(ctx *gin.Context) {
 	postID := ctx.GetInt("postID")
 	method := ctx.GetInt("method")
 	diff := ctx.GetInt("diff")
-	if diff <= bandoriEasy || diff >= bandoriSpecial {
+	if diff < bandoriEasy || diff > bandoriSpecial {
 		diff = bandoriExpert
 	}
 	PostInfo, err := service.FetchBandoriPost(postID, diff, method)

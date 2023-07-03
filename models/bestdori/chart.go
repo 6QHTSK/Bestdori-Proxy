@@ -115,7 +115,7 @@ func (chart V2Chart) ChartCheck() (err error) {
 				BPMStartCorrect = true
 			}
 			note.Connections = []V2Connection{}
-			note.BPM = math.Abs(note.BPM)
+			// note.BPM = math.Abs(note.BPM) // Sonolus服务器优化，不再修复负BPM问题
 		default:
 			toRemove = true
 		}
