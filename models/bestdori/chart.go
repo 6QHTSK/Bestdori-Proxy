@@ -24,7 +24,7 @@ type V2Connection struct {
 	Hidden bool     `json:"hidden,omitempty"`
 }
 
-func (note V2Note) GetBeat() (value float64) {
+func (note *V2Note) GetBeat() (value float64) {
 	if len(note.Connections) == 0 {
 		return *note.Beat
 	} else {
@@ -32,7 +32,7 @@ func (note V2Note) GetBeat() (value float64) {
 	}
 }
 
-func (note V2Note) GetLane() (value float64) {
+func (note *V2Note) GetLane() (value float64) {
 	if note.Type == "BPM" {
 		return 0
 	}
@@ -59,6 +59,7 @@ func (chart V2Chart) Less(i, j int) bool {
 func (chart V2Chart) Swap(i, j int) {
 	chart[i], chart[j] = chart[j], chart[i]
 }
+
 func fixLane(lane float64, isHidden bool) float64 {
 	if isHidden {
 		return math.Max(-0.5, math.Min(6.5, lane))
@@ -67,10 +68,10 @@ func fixLane(lane float64, isHidden bool) float64 {
 }
 
 // ChartCheck 尝试检查并修复谱面，并将官谱转化为自制谱格式
-func (chart V2Chart) ChartCheck() (err error) {
+func ChartCheck(chart *V2Chart) (err error) {
 	BPMStartCorrect := false // BPM需出现在第0拍上
-	var i int
-	for _, note := range chart {
+	var newChart V2Chart
+	for _, note := range *chart {
 		toRemove := false
 		switch note.Type {
 		case "Directional":
@@ -120,18 +121,18 @@ func (chart V2Chart) ChartCheck() (err error) {
 			toRemove = true
 		}
 		if !toRemove {
-			chart[i] = note
-			i++
+			newChart = append(newChart, note)
 		}
 	}
 	if !BPMStartCorrect {
 		return errors.BPMNotAtBeatZero
 	}
-	sort.Slice(chart, func(i, j int) bool {
-		if chart[i].GetBeat() == chart[j].GetBeat() {
-			return chart[i].GetLane() < chart[j].GetLane()
+	sort.Slice(newChart, func(i, j int) bool {
+		if newChart[i].GetBeat() == newChart[j].GetBeat() {
+			return newChart[i].GetLane() < newChart[j].GetLane()
 		}
-		return chart[i].GetBeat() < chart[j].GetBeat()
+		return newChart[i].GetBeat() < newChart[j].GetBeat()
 	})
+	chart = &newChart
 	return nil
 }
