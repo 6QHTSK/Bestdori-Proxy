@@ -7,14 +7,14 @@ import (
 	"testing"
 )
 
-// TestBandoriChart GET /bestdori/post/128/chart?diff=1
-// 六兆年 Normal谱面有271个物件
+// TestBandoriChart GET /bestdori/post/1/chart?diff=0
+// YBD Easy谱面有63个物件, 62个Note + 1个BPM物件
 func TestBandoriChart(t *testing.T) {
-	postInfo, err := FetchBandoriPost(128, 1, models.MethodChart)
+	postInfo, err := FetchBandoriPost(1, 0, models.MethodChart)
 	assert.Nil(t, err)
 	assert.Nil(t, postInfo.Info)
 	assert.NotNil(t, postInfo.Chart)
-	assert.Equal(t, len(*postInfo.Chart), 271)
+	assert.Equal(t, len(*postInfo.Chart), 63)
 }
 
 // TestBandoriPostInfo GET /bestdori/post/10001?diff=4&official&method=info
