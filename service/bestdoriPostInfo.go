@@ -78,7 +78,7 @@ func FetchBandoriPost(postID int, diff int, method int) (post models.Post, err e
 		if err != nil {
 			return post, err
 		}
-		err = bestdori.ChartCheck(&bandoriChart)
+		bandoriChart, err = bestdori.ChartCheck(bandoriChart)
 		if err != nil {
 			return post, err
 		}
@@ -136,7 +136,7 @@ func FetchBestdoriPost(postID int, method int) (post models.Post, err error) {
 		}
 	}
 	if method == models.MethodFull || method == models.MethodChart {
-		err = bestdori.ChartCheck(&bestdoriPost.Post.Chart)
+		bestdoriPost.Post.Chart, err = bestdori.ChartCheck(bestdoriPost.Post.Chart)
 		if err != nil {
 			return post, err
 		}

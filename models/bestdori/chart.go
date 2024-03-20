@@ -68,21 +68,20 @@ func fixLane(lane float64, isHidden bool) float64 {
 }
 
 // ChartCheck 尝试检查并修复谱面，并将官谱转化为自制谱格式
-func ChartCheck(chart *V2Chart) (err error) {
+func ChartCheck(chart V2Chart) (newChart V2Chart, err error) {
 	BPMStartCorrect := false // BPM需出现在第0拍上
-	var newChart V2Chart
-	for _, note := range *chart {
+	for _, note := range chart {
 		toRemove := false
 		switch note.Type {
 		case "Directional":
 			if note.Direction != "Left" && note.Direction != "Right" {
-				return errors.DirectionNoteTypeErr
+				return newChart, errors.DirectionNoteTypeErr
 			}
 			note.Width = int(math.Max(1, math.Min(3, float64(note.Width))))
 			fallthrough
 		case "Single":
 			if *note.Beat < 0.0 {
-				return errors.BeatLessThanZero
+				return newChart, errors.BeatLessThanZero
 			}
 			*note.Lane = fixLane(*note.Lane, false)
 			note.Connections = []V2Connection{}
@@ -99,7 +98,7 @@ func ChartCheck(chart *V2Chart) (err error) {
 			})
 			for j, formatTick := range note.Connections {
 				if *formatTick.Beat < 0.0 {
-					return errors.BeatLessThanZero
+					return newChart, errors.BeatLessThanZero
 				}
 				*formatTick.Lane = fixLane(*formatTick.Lane, formatTick.Hidden)
 				if j != len(note.Connections)-1 { // 不是最后一个节点
@@ -110,7 +109,7 @@ func ChartCheck(chart *V2Chart) (err error) {
 			}
 		case "BPM":
 			if *note.Beat < 0.0 {
-				return errors.BeatLessThanZero
+				return newChart, errors.BeatLessThanZero
 			}
 			if *note.Beat == 0.0 {
 				BPMStartCorrect = true
@@ -125,7 +124,7 @@ func ChartCheck(chart *V2Chart) (err error) {
 		}
 	}
 	if !BPMStartCorrect {
-		return errors.BPMNotAtBeatZero
+		return newChart, errors.BPMNotAtBeatZero
 	}
 	sort.Slice(newChart, func(i, j int) bool {
 		if newChart[i].GetBeat() == newChart[j].GetBeat() {
@@ -133,6 +132,5 @@ func ChartCheck(chart *V2Chart) (err error) {
 		}
 		return newChart[i].GetBeat() < newChart[j].GetBeat()
 	})
-	chart = &newChart
-	return nil
+	return newChart, nil
 }
